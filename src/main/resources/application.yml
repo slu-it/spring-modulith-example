@@ -37,7 +37,7 @@ server:
 
 spring:
   application:
-    name: spring-boot-service
+    name: spring-modulith-example
   jackson:
     default-property-inclusion: non_null
 

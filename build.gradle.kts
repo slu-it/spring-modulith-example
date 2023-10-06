@@ -26,6 +26,7 @@ dependencyManagement {
         mavenBom("org.jetbrains.kotlin:kotlin-bom:1.8.22")
         mavenBom("org.zalando:logbook-bom:3.4.0")
 
+        mavenBom("org.springframework.modulith:spring-modulith-bom:1.0.1")
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.4")
         mavenBom(SpringBootPlugin.BOM_COORDINATES)
     }
@@ -40,6 +41,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.modulith:spring-modulith-api")
 
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -49,6 +51,7 @@ dependencies {
 
     testImplementation("org.springframework:spring-webflux") // for WebTestClient
     testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.modulith:spring-modulith-starter-test")
     testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     testImplementation("org.springframework.security:spring-security-test")
 

@@ -2,5 +2,9 @@ logbook:
   format:
     style: json
 
+logging:
+  level:
+    org.springframework.modulith: debug
+
 server:
   shutdown: immediate

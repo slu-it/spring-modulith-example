@@ -1,8 +1,9 @@
-= Spring Boot Service
+= Spring Modulith Example
 
 Lorem Ipsum
 
 == Index
 
 * link:api.html[API Documentation]
+* link:architecture.html[Architecture Documentation]
 * link:domain.adoc[Domain Documentation]
