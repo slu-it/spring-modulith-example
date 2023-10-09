@@ -17,10 +17,10 @@ include::{snippets}/../spring-modulith-docs/components.puml[]
 
 include::{snippets}/../spring-modulith-docs/module-config.adoc[]
 
-=== Domain #1
+=== Skills
 
-include::{snippets}/../spring-modulith-docs/module-domain1.adoc[]
+include::{snippets}/../spring-modulith-docs/module-skill.adoc[]
 
-=== Domain #2
+=== Employee
 
-include::{snippets}/../spring-modulith-docs/module-domain2.adoc[]
+include::{snippets}/../spring-modulith-docs/module-employee.adoc[]

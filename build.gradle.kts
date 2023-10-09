@@ -90,6 +90,7 @@ tasks {
 tasks {
     asciidoctor {
         inputs.dir(file("build/generated-snippets"))
+        inputs.dir(file("build/spring-modulith-docs"))
         dependsOn(test)
         baseDirFollowsSourceDir()
         forkOptions {
@@ -123,11 +124,16 @@ tasks {
     }
     test {
         outputs.dir(file("build/generated-snippets"))
+        outputs.dir(file("build/spring-modulith-docs"))
     }
 }
 
 asciidoctorj {
     fatalWarnings("include file not found") // make build fail if generated files are missing
+    modules {
+        diagram.use()
+        diagram.setVersion("2.2.13")
+    }
 }
 
 detekt {
