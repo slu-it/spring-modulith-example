@@ -1,5 +1,6 @@
 package service.employee.business
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.IdGenerator
@@ -17,7 +18,7 @@ class EmployeeService(
 ) {
 
     fun get(id: UUID): Employee? =
-        repository.get(id)
+        repository.findByIdOrNull(id)
 
     fun create(data: Employee.Data): Employee {
         val id = idGenerator.generateId()
@@ -31,7 +32,7 @@ class EmployeeService(
             lastModified = now
         )
 
-        repository.upsert(employee)
+        repository.save(employee)
         publisher.publishEmployeeCreated(employee)
 
         return employee
@@ -40,7 +41,7 @@ class EmployeeService(
     fun updateData(id: UUID, block: (Employee.Data) -> Employee.Data): Employee? {
         var oldEmployee: Employee? = null
 
-        val updatedEmployee = repository.update(id) { employee ->
+        val updatedEmployee = update(id) { employee ->
             oldEmployee = employee
             employee.copy(data = block(employee.data))
         }
@@ -52,8 +53,16 @@ class EmployeeService(
         return updatedEmployee
     }
 
+    fun update(id: UUID, block: (Employee) -> Employee): Employee? {
+        val employee = get(id) ?: return null
+        val updatedEmployee = block(employee)
+        repository.save(updatedEmployee)
+        return updatedEmployee
+    }
+
     fun delete(id: UUID) {
-        if (repository.delete(id)) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id)
             publisher.publishEmployeeDeleted(id)
         }
     }

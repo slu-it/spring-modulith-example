@@ -1,5 +1,6 @@
 package service.skill.business
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.IdGenerator
@@ -17,7 +18,7 @@ class SkillService(
 ) {
 
     fun get(id: UUID): Skill? =
-        repository.get(id)
+        repository.findByIdOrNull(id)
 
     fun create(data: Skill.Data): Skill {
         val id = idGenerator.generateId()
@@ -30,7 +31,7 @@ class SkillService(
             lastModified = now
         )
 
-        repository.upsert(skill)
+        repository.save(skill)
         publisher.publishSkillCreated(skill)
 
         return skill
@@ -39,7 +40,7 @@ class SkillService(
     fun updateData(id: UUID, block: (Skill.Data) -> Skill.Data): Skill? {
         var oldSkill: Skill? = null
 
-        val updatedSkill = repository.update(id) { skill ->
+        val updatedSkill = update(id) { skill ->
             oldSkill = skill
             skill.copy(data = block(skill.data))
         }
@@ -51,8 +52,16 @@ class SkillService(
         return updatedSkill
     }
 
+    fun update(id: UUID, block: (Skill) -> Skill): Skill? {
+        val skill = get(id) ?: return null
+        val updatedSkill = block(skill)
+        repository.save(updatedSkill)
+        return updatedSkill
+    }
+
     fun delete(id: UUID) {
-        if (repository.delete(id)) {
+        if (repository.existsById(id)) {
+            repository.deleteById(id)
             publisher.publishSkillDeleted(id)
         }
     }
