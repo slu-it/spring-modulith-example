@@ -1,7 +1,6 @@
 package service.skill
 
 import service.Event
-import service.skill.business.Skill
 import java.time.Instant
 import java.util.UUID
 

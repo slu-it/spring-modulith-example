@@ -10,6 +10,10 @@ console-reports:
 
 ## rule configuration ##
 
+naming:
+  MatchingDeclarationName:
+    active: false
+
 formatting:
   Filename:
     active: false # disabled in favor of 'naming' rule 'MatchingDeclarationName'

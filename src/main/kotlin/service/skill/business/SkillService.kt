@@ -41,7 +41,7 @@ class SkillService(
             oldSkill = skill
             skill.copy(data = block(skill.data))
         }
-        
+
         if (oldSkill != null && updatedSkill != null) {
             publisher.publishSkillUpdated(oldSkill!!, updatedSkill)
         }
