@@ -1,20 +1,20 @@
 package service.skill.persistence
 
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Repository
 import service.skill.business.Skill
 import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
 
 @Repository
-class SkillRepository {
-
-    private val database = ConcurrentHashMap<UUID, Skill>()
+class SkillRepository(
+    private val repository: InternalSkillRepository
+) {
 
     fun get(id: UUID): Skill? =
-        database[id]
+        repository.findByIdOrNull(id)
 
     fun upsert(skill: Skill) {
-        database[skill.id] = skill
+        repository.save(skill)
     }
 
     fun update(id: UUID, block: (Skill) -> Skill): Skill? {
@@ -24,6 +24,9 @@ class SkillRepository {
         return updatedSkill
     }
 
-    fun delete(id: UUID): Boolean =
-        database.remove(id) != null
+    fun delete(id: UUID): Boolean {
+        val existed = repository.existsById(id)
+        repository.deleteById(id)
+        return existed
+    }
 }

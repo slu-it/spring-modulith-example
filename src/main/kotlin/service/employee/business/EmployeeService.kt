@@ -1,12 +1,14 @@
 package service.employee.business
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.IdGenerator
 import service.employee.persistence.EmployeeRepository
 import java.time.Clock
 import java.util.UUID
 
 @Service
+@Transactional
 class EmployeeService(
     private val repository: EmployeeRepository,
     private val publisher: EmployeeEventPublisher,

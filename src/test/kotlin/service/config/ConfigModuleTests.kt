@@ -12,8 +12,10 @@ import org.springframework.http.HttpStatus.UNAUTHORIZED
 import org.springframework.modulith.test.ApplicationModuleTest
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.web.reactive.server.WebTestClient
+import utils.InitializeWithContainers
 
 @ActiveProfiles("test")
+@InitializeWithContainers
 @ApplicationModuleTest(webEnvironment = RANDOM_PORT)
 class ConfigModuleTests(
     @Autowired val webTestClient: WebTestClient

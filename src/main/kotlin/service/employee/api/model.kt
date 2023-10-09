@@ -6,7 +6,7 @@ import java.util.UUID
 
 data class EmployeeRepresentation(
     val id: UUID,
-    val fistName: String,
+    val firstName: String,
     val lastName: String,
     val knowledge: List<KnowledgeRepresentation>
 )
@@ -20,7 +20,7 @@ data class KnowledgeRepresentation(
 fun Employee.toRepresentation(): EmployeeRepresentation =
     EmployeeRepresentation(
         id = id,
-        fistName = data.fistName,
+        firstName = data.firstName,
         lastName = data.lastName,
         knowledge = knowledge.map { it.toRepresentation() }
     )

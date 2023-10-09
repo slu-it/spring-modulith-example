@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  sme-mongodb:
+    image: mongo:6.0.6
+    container_name: sme-mongodb
+    ports:
+      - 27017:27017
+  sme-postgres:
+    image: postgres:15.3-alpine
+    container_name: sme-postgres
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=database

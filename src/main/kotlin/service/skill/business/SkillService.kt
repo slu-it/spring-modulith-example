@@ -1,12 +1,14 @@
 package service.skill.business
 
 import org.springframework.stereotype.Service
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.util.IdGenerator
 import service.skill.persistence.SkillRepository
 import java.time.Clock
 import java.util.UUID
 
 @Service
+@Transactional
 class SkillService(
     private val repository: SkillRepository,
     private val publisher: SkillEventPublisher,

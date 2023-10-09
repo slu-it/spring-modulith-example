@@ -1,25 +1,26 @@
 package service.employee.persistence
 
-import org.springframework.context.event.EventListener
-import org.springframework.scheduling.annotation.Async
+import org.slf4j.LoggerFactory.getLogger
+import org.springframework.data.repository.findByIdOrNull
+import org.springframework.modulith.ApplicationModuleListener
 import org.springframework.stereotype.Repository
 import service.employee.business.Employee
-import service.employee.business.Knowledge
 import service.skill.SkillDeleted
 import service.skill.SkillUpdated
 import java.util.UUID
-import java.util.concurrent.ConcurrentHashMap
 
 @Repository
-class EmployeeRepository {
+class EmployeeRepository(
+    private val repository: InternalEmployeeRepository
+) {
 
-    private val database = ConcurrentHashMap<UUID, Employee>()
+    private val log = getLogger(javaClass)
 
     fun get(id: UUID): Employee? =
-        database[id]
+        repository.findByIdOrNull(id)
 
     fun upsert(employee: Employee) {
-        database[employee.id] = employee
+        repository.save(employee)
     }
 
     fun update(id: UUID, block: (Employee) -> Employee): Employee? {
@@ -29,20 +30,21 @@ class EmployeeRepository {
         return updatedEmployee
     }
 
-    fun delete(id: UUID): Boolean =
-        database.remove(id) != null
+    fun delete(id: UUID): Boolean {
+        val existed = repository.existsById(id)
+        repository.deleteById(id)
+        return existed
+    }
 
-    @Async
-    @EventListener
+    @ApplicationModuleListener
     fun handle(event: SkillUpdated) {
         val skillId = event.newSkill.id
-
-        val updatedEmployees = database.values
-            .filter { employee -> employee.hasKnowledge(skillId) }
+        // brute force, could also be a database statement ...
+        repository.findAllWithKnowledgeOfSkill(skillId)
             .map { employee ->
                 val updatedKnowledge = employee.knowledge
                     .map { knowledge ->
-                        if (knowledge.isOfSkill(skillId)) {
+                        if (knowledge.skillId == skillId) {
                             knowledge.copy(label = event.newSkill.label)
                         } else {
                             knowledge
@@ -50,26 +52,19 @@ class EmployeeRepository {
                     }
                 employee.copy(knowledge = updatedKnowledge)
             }
-
-        updatedEmployees.forEach(::upsert)
+            .forEach(::upsert)
     }
 
-    private fun Employee.hasKnowledge(skillId: UUID) = knowledge.any { it.isOfSkill(skillId) }
-    private fun Knowledge.isOfSkill(skillId: UUID) = this.skillId == skillId
-
-    @Async
-    @EventListener
+    @ApplicationModuleListener
     fun handle(event: SkillDeleted) {
         val skillId = event.skillId
-
-        val updatedEmployees = database.values
-            .filter { employee -> employee.hasKnowledge(skillId) }
+        // brute force, could also be a database statement ...
+        repository.findAllWithKnowledgeOfSkill(skillId)
             .map { employee ->
                 val filteredKnowledge = employee.knowledge
-                    .filter { knowledge -> !knowledge.isOfSkill(skillId) }
+                    .filter { knowledge -> knowledge.skillId != skillId }
                 employee.copy(knowledge = filteredKnowledge)
             }
-
-        updatedEmployees.forEach(::upsert)
+            .forEach(::upsert)
     }
 }

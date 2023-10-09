@@ -5,13 +5,13 @@ import java.util.UUID
 
 data class EmployeeDto(
     val id: UUID,
-    val fistName: String,
+    val firstName: String,
     val lastName: String,
 )
 
 fun Employee.toDto(): EmployeeDto =
     EmployeeDto(
         id = id,
-        fistName = data.fistName,
+        firstName = data.firstName,
         lastName = data.lastName
     )

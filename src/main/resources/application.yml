@@ -38,8 +38,19 @@ server:
 spring:
   application:
     name: spring-modulith-example
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/database"
+    username: "user"
+    password: "password"
   jackson:
     default-property-inclusion: non_null
+  modulith:
+    default-async-termination: false
+    events:
+      jdbc:
+        schema-initialization:
+          enabled: true
+    republish-outstanding-events-on-restart: true
 
 ---
 spring.config.activate.on-profile: json-logging
