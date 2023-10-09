@@ -1,6 +1,5 @@
 package service.employee.persistence
 
-import org.slf4j.LoggerFactory.getLogger
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.modulith.ApplicationModuleListener
 import org.springframework.stereotype.Repository
@@ -13,8 +12,6 @@ import java.util.UUID
 class EmployeeRepository(
     private val repository: InternalEmployeeRepository
 ) {
-
-    private val log = getLogger(javaClass)
 
     fun get(id: UUID): Employee? =
         repository.findByIdOrNull(id)
