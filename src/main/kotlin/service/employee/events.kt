@@ -1,6 +1,6 @@
 package service.employee
 
-import service.Event
+import org.jmolecules.event.types.DomainEvent
 import java.time.Instant
 import java.util.UUID
 
@@ -8,14 +8,14 @@ data class EmployeeCreated(
     override val id: UUID,
     override val timestamp: Instant,
     val employee: EmployeeDto,
-) : Event
+) : EmployeeEvent
 
 data class EmployeeDataUpdated(
     override val id: UUID,
     override val timestamp: Instant,
     val oldEmployee: EmployeeDto,
     val newEmployee: EmployeeDto,
-) : Event {
+) : EmployeeEvent {
     init {
         require(oldEmployee.id == newEmployee.id)
     }
@@ -25,4 +25,9 @@ data class EmployeeDeleted(
     override val id: UUID,
     override val timestamp: Instant,
     val employeeId: UUID,
-) : Event
+) : EmployeeEvent
+
+interface EmployeeEvent : DomainEvent {
+    val id: UUID
+    val timestamp: Instant
+}
