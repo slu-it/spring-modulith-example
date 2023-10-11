@@ -8,3 +8,8 @@ logging:
 
 server:
   shutdown: immediate
+
+spring:
+  modulith:
+    moments:
+      enable-time-machine: true

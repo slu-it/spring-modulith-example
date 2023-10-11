@@ -50,6 +50,12 @@ spring:
       jdbc:
         schema-initialization:
           enabled: true
+    moments:
+      enable-time-machine: false
+      granularity: hours
+      locale: de_DE
+      quarter-start-month: january
+      zone-id: Europe/Berlin
     republish-outstanding-events-on-restart: true
 
 ---
