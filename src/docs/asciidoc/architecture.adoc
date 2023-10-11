@@ -17,10 +17,10 @@ include::{snippets}/../spring-modulith-docs/components.puml[]
 
 include::{snippets}/../spring-modulith-docs/module-config.adoc[]
 
-=== Skills
-
-include::{snippets}/../spring-modulith-docs/module-skill.adoc[]
-
 === Employee
 
 include::{snippets}/../spring-modulith-docs/module-employee.adoc[]
+
+=== Skills
+
+include::{snippets}/../spring-modulith-docs/module-skill.adoc[]

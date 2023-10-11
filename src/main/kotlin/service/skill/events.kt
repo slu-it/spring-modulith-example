@@ -17,7 +17,9 @@ data class SkillUpdated(
     val newSkill: SkillDto,
 ) : SkillEvent {
     init {
-        require(oldSkill.id == newSkill.id)
+        require(oldSkill.id == newSkill.id) {
+            "The 'old' and 'new' instance need to reference the same skill!"
+        }
     }
 }
 

@@ -1,5 +1,6 @@
 package service.employee.business
 
+import org.jmolecules.event.types.DomainEvent
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
 import org.springframework.util.IdGenerator
@@ -18,26 +19,16 @@ class EmployeeEventPublisher(
     private val clock: Clock
 ) {
 
-    fun publishEmployeeCreated(employee: Employee) {
-        publish { eventId, timestamp ->
-            EmployeeCreated(eventId, timestamp, employee.toDto())
-        }
-    }
+    fun publishEmployeeCreated(employee: Employee) =
+        publish(EmployeeCreated(id(), now(), employee.toDto()))
 
-    fun publishEmployeeDataUpdated(old: Employee, new: Employee) {
-        check(old.id == new.id) { "The 'old' and 'new' objects need to reference the same employee!" }
-        publish { eventId, timestamp ->
-            EmployeeDataUpdated(eventId, timestamp, old.toDto(), new.toDto())
-        }
-    }
+    fun publishEmployeeDataUpdated(old: Employee, new: Employee) =
+        publish(EmployeeDataUpdated(id(), now(), old.toDto(), new.toDto()))
 
-    fun publishEmployeeDeleted(id: UUID) {
-        publish { eventId, timestamp ->
-            EmployeeDeleted(eventId, timestamp, id)
-        }
-    }
+    fun publishEmployeeDeleted(id: UUID) =
+        publish(EmployeeDeleted(id(), now(), id))
 
-    private fun publish(block: (UUID, Instant) -> Any) {
-        publisher.publishEvent(block(idGenerator.generateId(), clock.instant()))
-    }
+    private fun id(): UUID = idGenerator.generateId()
+    private fun now(): Instant = clock.instant()
+    private fun publish(event: DomainEvent) = publisher.publishEvent(event)
 }

@@ -17,7 +17,9 @@ data class EmployeeDataUpdated(
     val newEmployee: EmployeeDto,
 ) : EmployeeEvent {
     init {
-        require(oldEmployee.id == newEmployee.id)
+        require(oldEmployee.id == newEmployee.id) {
+            "The 'old' and 'new' instances need to reference the same employee!"
+        }
     }
 }
 
