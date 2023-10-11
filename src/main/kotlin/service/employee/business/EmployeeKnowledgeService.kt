@@ -1,12 +1,12 @@
 package service.employee.business
 
 import org.springframework.stereotype.Service
-import service.skill.SkillsSpi
+import service.skill.SkillAccessor
 import java.util.UUID
 
 @Service
 class EmployeeKnowledgeService(
-    private val skills: SkillsSpi,
+    private val skills: SkillAccessor,
     private val service: EmployeeService,
 ) {
 

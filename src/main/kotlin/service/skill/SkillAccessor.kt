@@ -5,7 +5,7 @@ import service.skill.business.SkillService
 import java.util.UUID
 
 @Service
-class SkillsSpi(
+class SkillAccessor(
     private val service: SkillService
 ) {
     fun getById(skillId: UUID): SkillDto? =
