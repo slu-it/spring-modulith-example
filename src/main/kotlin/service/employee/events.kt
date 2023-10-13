@@ -1,15 +1,18 @@
 package service.employee
 
 import org.jmolecules.event.types.DomainEvent
+import org.springframework.modulith.events.Externalized
 import java.time.Instant
 import java.util.UUID
 
+@Externalized("employee-events::EmployeeCreated")
 data class EmployeeCreated(
     override val id: UUID,
     override val timestamp: Instant,
     val employee: EmployeeDto,
 ) : EmployeeEvent
 
+@Externalized("employee-events::EmployeeDataUpdated")
 data class EmployeeDataUpdated(
     override val id: UUID,
     override val timestamp: Instant,
@@ -23,6 +26,7 @@ data class EmployeeDataUpdated(
     }
 }
 
+@Externalized("employee-events::EmployeeDeleted")
 data class EmployeeDeleted(
     override val id: UUID,
     override val timestamp: Instant,

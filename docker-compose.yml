@@ -14,3 +14,8 @@ services:
       - POSTGRES_USER=user
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=database
+  sme-rabbitmq:
+    image: rabbitmq:3.11
+    container_name: sme-rabbitmq
+    ports:
+      - 5672:5672

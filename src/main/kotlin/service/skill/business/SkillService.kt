@@ -46,7 +46,7 @@ class SkillService(
         }
 
         if (oldSkill != null && updatedSkill != null) {
-            publisher.publishSkillUpdated(oldSkill!!, updatedSkill)
+            publisher.publishSkillDataUpdated(oldSkill!!, updatedSkill)
         }
 
         return updatedSkill

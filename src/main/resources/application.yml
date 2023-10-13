@@ -10,7 +10,8 @@ logging:
   level:
     root: warn
     service: info
-    org.zalando.logbook: trace
+    org.springframework: info
+    org.zalando.logbook: info # switch to 'trace' in order to see request/response logs
 
 management:
   endpoint:
@@ -38,6 +39,9 @@ server:
 spring:
   application:
     name: spring-modulith-example
+  data:
+    mongodb:
+      uuid-representation: standard
   datasource:
     url: "jdbc:postgresql://localhost:5432/database"
     username: "user"

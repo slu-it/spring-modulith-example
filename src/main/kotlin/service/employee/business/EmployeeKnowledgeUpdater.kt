@@ -3,8 +3,8 @@ package service.employee.business
 import org.springframework.modulith.ApplicationModuleListener
 import org.springframework.stereotype.Component
 import service.employee.persistence.EmployeeRepository
+import service.skill.SkillDataUpdated
 import service.skill.SkillDeleted
-import service.skill.SkillUpdated
 
 @Component
 class EmployeeKnowledgeUpdater(
@@ -12,7 +12,7 @@ class EmployeeKnowledgeUpdater(
 ) {
 
     @ApplicationModuleListener
-    fun handle(event: SkillUpdated) {
+    fun handle(event: SkillDataUpdated) {
         val skillId = event.newSkill.id
         // brute force, could also be a database statement ...
         repository.findAllWithKnowledgeOfSkill(skillId)

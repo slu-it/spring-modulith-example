@@ -1,16 +1,19 @@
 package service.skill
 
 import org.jmolecules.event.types.DomainEvent
+import org.springframework.modulith.events.Externalized
 import java.time.Instant
 import java.util.UUID
 
+@Externalized("skill-events::SkillCreated")
 data class SkillCreated(
     override val id: UUID,
     override val timestamp: Instant,
     val skill: SkillDto,
 ) : SkillEvent
 
-data class SkillUpdated(
+@Externalized("skill-events::SkillDataUpdated")
+data class SkillDataUpdated(
     override val id: UUID,
     override val timestamp: Instant,
     val oldSkill: SkillDto,
@@ -23,6 +26,7 @@ data class SkillUpdated(
     }
 }
 
+@Externalized("skill-events::SkillDeleted")
 data class SkillDeleted(
     override val id: UUID,
     override val timestamp: Instant,

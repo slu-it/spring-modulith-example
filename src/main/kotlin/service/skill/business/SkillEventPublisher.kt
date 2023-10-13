@@ -5,8 +5,8 @@ import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Component
 import org.springframework.util.IdGenerator
 import service.skill.SkillCreated
+import service.skill.SkillDataUpdated
 import service.skill.SkillDeleted
-import service.skill.SkillUpdated
 import service.skill.toDto
 import java.time.Clock
 import java.time.Instant
@@ -22,8 +22,8 @@ class SkillEventPublisher(
     fun publishSkillCreated(skill: Skill) =
         publish(SkillCreated(id(), now(), skill.toDto()))
 
-    fun publishSkillUpdated(old: Skill, new: Skill) =
-        publish(SkillUpdated(id(), now(), old.toDto(), new.toDto()))
+    fun publishSkillDataUpdated(old: Skill, new: Skill) =
+        publish(SkillDataUpdated(id(), now(), old.toDto(), new.toDto()))
 
     fun publishSkillDeleted(id: UUID) =
         publish(SkillDeleted(id(), now(), id))

@@ -3,6 +3,7 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.FAILED
 import org.gradle.api.tasks.testing.logging.TestLogEvent.SKIPPED
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
+import java.net.URI
 
 plugins {
     id("io.spring.dependency-management") version "1.1.3"
@@ -18,6 +19,10 @@ plugins {
 
 repositories {
     mavenCentral()
+    maven {
+        name = "Spring Milestones"
+        url = URI("https://repo.spring.io/milestone")
+    }
 }
 
 dependencyManagement {
@@ -27,7 +32,7 @@ dependencyManagement {
         mavenBom("org.testcontainers:testcontainers-bom:1.19.0")
         mavenBom("org.zalando:logbook-bom:3.4.0")
 
-        mavenBom("org.springframework.modulith:spring-modulith-bom:1.0.1")
+        mavenBom("org.springframework.modulith:spring-modulith-bom:1.1.0-M1")
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:2022.0.4")
         mavenBom(SpringBootPlugin.BOM_COORDINATES)
     }
@@ -40,10 +45,12 @@ dependencyManagement {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-amqp")
     implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
     implementation("org.springframework.boot:spring-boot-starter-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.modulith:spring-modulith-events-amqp")
     implementation("org.springframework.modulith:spring-modulith-starter-core")
     implementation("org.springframework.modulith:spring-modulith-starter-jdbc")
 
@@ -68,6 +75,7 @@ dependencies {
     testImplementation("io.mockk:mockk-jvm")
     testImplementation("org.testcontainers:mongodb")
     testImplementation("org.testcontainers:postgresql")
+    testImplementation("org.testcontainers:rabbitmq")
 
     detektPlugins("io.gitlab.arturbosch.detekt:detekt-formatting")
 }
