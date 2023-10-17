@@ -1,4 +1,4 @@
-package service
+package service.employee.config
 
 import org.slf4j.LoggerFactory.getLogger
 import org.springframework.amqp.core.BindingBuilder
@@ -10,8 +10,10 @@ import org.springframework.amqp.rabbit.annotation.RabbitListener
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
+// only exists for demonstrating that the messages are actually published to a topic
+
 @Configuration
-class ExternalizedEventsListener {
+class EmployeeExternalizedEventsListener {
 
     private val log = getLogger(javaClass)
 
@@ -26,18 +28,7 @@ class ExternalizedEventsListener {
         return Declarables(queue, binding)
     }
 
-    @Bean
-    fun skillBindings(skillEventsTopic: TopicExchange): Declarables {
-        val queue = Queue("queues.events.skill", true)
-        val binding = BindingBuilder
-            .bind(queue)
-            .to(skillEventsTopic)
-            .with("*")
-
-        return Declarables(queue, binding)
-    }
-
-    @RabbitListener(queues = ["queues.events.employee", "queues.events.skill"])
+    @RabbitListener(queues = ["queues.events.employee"])
     fun handle(message: Message) {
         log.info("Message: ${message.body.toString(Charsets.UTF_8)}")
         log.info("Properties: ${message.messageProperties}")
