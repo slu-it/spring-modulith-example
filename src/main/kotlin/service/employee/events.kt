@@ -33,7 +33,7 @@ data class EmployeeDeleted(
     val employeeId: UUID,
 ) : EmployeeEvent
 
-interface EmployeeEvent : DomainEvent {
+sealed interface EmployeeEvent : DomainEvent {
     val id: UUID
     val timestamp: Instant
 }

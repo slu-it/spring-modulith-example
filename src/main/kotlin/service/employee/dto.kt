@@ -1,6 +1,6 @@
 package service.employee
 
-import service.employee.business.Employee
+import service.employee.business.model.Employee
 import java.util.UUID
 
 data class EmployeeDto(

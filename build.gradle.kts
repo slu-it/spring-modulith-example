@@ -39,6 +39,7 @@ dependencyManagement {
     dependencies {
         dependency("com.ninja-squad:springmockk:4.0.2")
         dependency("io.gitlab.arturbosch.detekt:detekt-formatting:1.22.0")
+        dependency("io.kotest:kotest-assertions-core:5.6.2")
         dependency("io.mockk:mockk-jvm:1.13.5")
     }
 }
@@ -72,6 +73,7 @@ dependencies {
     testImplementation("io.github.logrecorder:logrecorder-assertions")
     testImplementation("io.github.logrecorder:logrecorder-junit5")
     testImplementation("io.github.logrecorder:logrecorder-logback")
+    testImplementation("io.kotest:kotest-assertions-core")
     testImplementation("io.mockk:mockk-jvm")
     testImplementation("org.testcontainers:mongodb")
     testImplementation("org.testcontainers:postgresql")

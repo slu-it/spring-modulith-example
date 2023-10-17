@@ -3,7 +3,7 @@ package service.employee.persistence
 import org.springframework.data.mongodb.repository.MongoRepository
 import org.springframework.data.mongodb.repository.Query
 import org.springframework.stereotype.Repository
-import service.employee.business.Employee
+import service.employee.business.model.Employee
 import java.util.UUID
 import java.util.stream.Stream
 
