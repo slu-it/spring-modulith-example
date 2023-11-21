@@ -1,4 +1,4 @@
-package service.employee.business
+package service.employee.business.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
@@ -18,9 +18,3 @@ data class Employee(
         val lastName: String,
     )
 }
-
-data class Knowledge(
-    val skillId: UUID,
-    val label: String,
-    val level: Int,
-)

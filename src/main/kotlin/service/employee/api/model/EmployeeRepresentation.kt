@@ -1,7 +1,6 @@
-package service.employee.api
+package service.employee.api.model
 
-import service.employee.business.Employee
-import service.employee.business.Knowledge
+import service.employee.business.model.Employee
 import java.util.UUID
 
 data class EmployeeRepresentation(
@@ -11,23 +10,10 @@ data class EmployeeRepresentation(
     val knowledge: List<KnowledgeRepresentation>
 )
 
-data class KnowledgeRepresentation(
-    val id: UUID,
-    val label: String,
-    val level: Int,
-)
-
 fun Employee.toRepresentation(): EmployeeRepresentation =
     EmployeeRepresentation(
         id = id,
         firstName = data.firstName,
         lastName = data.lastName,
         knowledge = knowledge.map { it.toRepresentation() }
-    )
-
-fun Knowledge.toRepresentation(): KnowledgeRepresentation =
-    KnowledgeRepresentation(
-        id = skillId,
-        label = label,
-        level = level
     )

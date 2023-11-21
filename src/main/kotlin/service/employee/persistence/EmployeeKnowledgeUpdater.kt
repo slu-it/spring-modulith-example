@@ -1,8 +1,7 @@
-package service.employee.business
+package service.employee.persistence
 
 import org.springframework.modulith.ApplicationModuleListener
 import org.springframework.stereotype.Component
-import service.employee.persistence.EmployeeRepository
 import service.skill.SkillDataUpdated
 import service.skill.SkillDeleted
 
